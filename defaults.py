@@ -1,0 +1,3 @@
+RAW_AUDIO_PATH = "raw_audio"
+SAVE_PATH = "ViSEDia"
+MAX_LENGTH = 30

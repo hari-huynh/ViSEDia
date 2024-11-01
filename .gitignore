@@ -1,0 +1,6 @@
+venv
+raw_audio
+ViSEDia
+.idea
+process_emotion_transcript.csv
+__pycache__/
