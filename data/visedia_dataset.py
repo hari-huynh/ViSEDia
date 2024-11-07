@@ -60,7 +60,7 @@ class ViSEDia(Dataset):
         self.transform = transform
 
     def load_audio_metadata(self):
-        with open(f"{self.dataset_path}/ViSED_manifest.json", "r") as file:
+        with open(f"{self.dataset_path}/ViSEDia_manifest.json", "r") as file:
           all_dict = json.load(file)
 
         return list(all_dict.values())
