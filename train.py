@@ -2,9 +2,6 @@ from transformers import TrainingArguments, Trainer
 from transformers import WavLMConfig
 from data.visedia_dataset import my_collate_fn, ViSEDia
 from model.model import SED_Model
-
-from data.visedia_dataset import SED_Model, my_collate_fn, ViSEDia
-
 from torchaudio.transforms import Resample
 import yaml
 import argparse
