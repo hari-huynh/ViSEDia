@@ -1,10 +1,19 @@
 from transformers import TrainingArguments, Trainer
 from transformers import WavLMConfig
-from defaults import  label2id, id2label, ORIG_SAMPLE_RATE, TARGET_SAMPLE_RATE, SAVE_PATH
+ , TARGET_SAMPLE_RATE
 from data.visedia_dataset import SED_Model, my_collate_fn, ViSEDia
 from torchaudio.transforms import Resample
+import yaml
 import argparse
 
+# Load configs
+with open("configs.yaml", "r") as file:
+    conf = yaml.safe_load(file)
+
+id2label = {int(k): v for k, v in conf["id2emo"].items()}
+label2id = {v: k for k, v in id2label.items()}
+ORIG_SAMPLE_RATE = conf["orig_sample_rate"]
+TARGET_SAMPLE_RATE = conf["target_sample_rate"]
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train ViSEDia model")

@@ -4,14 +4,20 @@ from torch.utils.data import Dataset
 from torch.nn.utils.rnn import pad_sequence
 from torch.nn.functional import pad
 import json
-from defaults import speaker2id, id2speaker, label2id, id2label
+import yaml
+
+# Load configs
+with open("configs.yaml", "r") as file:
+    conf = yaml.safe_load(file)
+
+id2speaker = {int(k): v for k, v in conf["id2spk"].items()}
+speaker2id = {v: k for k, v in id2speaker.items()}
+id2label = {int(k): v for k, v in conf["id2emo"].items()}
+label2id = {v: k for k, v in id2label.items()}
 
 # Check if two audio segment overlapped
 def get_overlap(a, b):
     return max(0, min(a[1], b[1]) - max(a[0], b[0]))
-
-
-import torch
 
 def get_multilabel(data, win_len=0.02, stride=0.02):
     emo_list = data["emotion"]

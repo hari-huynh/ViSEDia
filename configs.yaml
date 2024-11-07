@@ -1,0 +1,18 @@
+raw_audio_path: "raw_audio"
+save_path: "ViSEDia"
+min_duration: 3
+pad_duration: 0.5
+orig_sample_rate: 22050
+target_sample_rate: 16000
+
+id2spk:
+    0: "Speaker 1"
+    1: "Speaker 2"
+    2: "Speaker 3"
+    3: "Speaker 4"
+
+id2emo:
+    0: "Angry"
+    1: "Neutral"
+    2: "Happy"
+    3: "Sad"

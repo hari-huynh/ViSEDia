@@ -1,12 +1,17 @@
 import torch
 import numpy as np
+import yaml
 from transformers import WavLMConfig
-from defaults import id2label, TARGET_SAMPLE_RATE
 from data.visedia_dataset import SED_Model
 from torchaudio.transforms import Resample
 import argparse
 
+# Load configs
+with open("configs.yaml", "r") as file:
+    conf = yaml.safe_load(file)
 
+id2label = {int(k): v for k, v in conf["id2emo"].items()}
+TARGET_SAMPLE_RATE = conf["target_sample_rate"]
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Load model checkpoint and predict")
