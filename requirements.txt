@@ -1,3 +1,7 @@
 scipy
 librosa
 pandas
+matplotlib
+torch
+torchaudio
+torchmetrics
