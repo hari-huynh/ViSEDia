@@ -1,6 +1,5 @@
 from transformers import TrainingArguments, Trainer
 from transformers import WavLMConfig
- , TARGET_SAMPLE_RATE
 from data.visedia_dataset import SED_Model, my_collate_fn, ViSEDia
 from torchaudio.transforms import Resample
 import yaml
