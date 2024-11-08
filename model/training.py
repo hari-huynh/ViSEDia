@@ -10,6 +10,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Train ViSEDia model")
 
     # Tham số cho Trainer
+    parser.add_argument("--dataset-dir", type=str)
     parser.add_argument("--output_dir", type=str, default="./ViSEDia_ckpt", help="Output directory for model checkpoints")
     parser.add_argument("--num_train_epochs", type=int, default=5, help="Number of training epochs")
     parser.add_argument("--learning_rate", type=float, default=1e-5, help="Learning rate for training")
@@ -33,7 +34,7 @@ def main():
     resampler = Resample(orig_freq=ORIG_SAMPLE_RATE, new_freq=TARGET_SAMPLE_RATE)
 
     train_data = ViSEDia(
-        dataset_path = SAVE_PATH,
+        dataset_path = args.dataset_dir,
         label2id = label2id,
         id2label = id2label,
         transform = resampler
