@@ -87,6 +87,8 @@ def merge_consecutive_short_segments(diarizations, durations):
         else:
             if idx >= 1:
                 start_time = durations[idx][0] - min(PAD_DURATION, durations[idx][0] - durations[idx - 1][0])
+            else:
+                start_time = durations[idx][0] - min(PAD_DURATION, durations[idx][0])
 
             consecutive_segments.append(diarizations[idx])
 
