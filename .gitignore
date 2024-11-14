@@ -1,6 +1,7 @@
 venv
 raw_audio
 ViSEDia
+*.zip
 .idea
 process_emotion_transcript.csv
 __pycache__/

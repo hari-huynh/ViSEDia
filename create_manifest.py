@@ -12,7 +12,7 @@ os.makedirs(SAVE_PATH, exist_ok=True)
 data = pd.read_csv("process_emotion_transcript.csv")
 
 # Get relevant informations
-audio_ids = [path.split("/")[-1].split("-")[1][:-4] for path in data["audio"]]
+audio_ids = ["-".join(path.split("/")[-1].split("-")[1:])[:-4] for path in data["audio"]]
 raw_diarizations = [eval(dia) for dia in data["label"]]
 raw_emotions = [eval(emo) for emo in data["sentiment"]]
 raw_transcriptions = [eval(trans) for trans in data["transcription"]]
