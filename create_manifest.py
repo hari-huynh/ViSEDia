@@ -1,13 +1,19 @@
 import os
 import pandas as pd
 import json
-from defaults import MAX_LENGTH, SAVE_PATH, MIN_DURATION, N_CONSECUTIVE_UTTERANCE, PAD_DURATION
+# from defaults import MAX_LENGTH, SAVE_PATH, MIN_DURATION, N_CONSECUTIVE_UTTERANCE, PAD_DURATION
 from utils import load_audio, save_audio, get_audio_segments
 import numpy as np
 import matplotlib.pyplot as plt
+import yaml
+
+
+# Load configs
+with open("./ViSEDia/configs.yaml", "r") as file:
+    conf = yaml.safe_load(file)
 
 # Make folder if not exist
-os.makedirs(SAVE_PATH, exist_ok=True)
+os.makedirs(conf['save_path'], exist_ok=True)
 
 data = pd.read_csv("process_emotion_transcript.csv")
 
@@ -76,7 +82,7 @@ def merge_segments(diarization):
 def merge_consecutive_short_segments(diarizations, durations):
     # Get short segments
     consecutive_durations, consecutive_segments = [], []
-    short_utterance_mask = [1 if duration[1] - duration[0] < MIN_DURATION else 0 for i, duration in enumerate(durations)]
+    short_utterance_mask = [1 if duration[1] - duration[0] < conf['min_duration']  else 0 for i, duration in enumerate(durations)]
 
     idx = 0
     while idx < len(short_utterance_mask):
@@ -86,9 +92,9 @@ def merge_consecutive_short_segments(diarizations, durations):
             idx += 1
         else:
             if idx >= 1:
-                start_time = durations[idx][0] - min(PAD_DURATION, durations[idx][0] - durations[idx - 1][0])
+                start_time = durations[idx][0] - min(conf['pad_duration'], durations[idx][0] - durations[idx - 1][0])
             else:
-                start_time = durations[idx][0] - min(PAD_DURATION, durations[idx][0])
+                start_time = durations[idx][0] - min(conf['pad_duration'], durations[idx][0])
 
             consecutive_segments.append(diarizations[idx])
 
@@ -100,7 +106,7 @@ def merge_consecutive_short_segments(diarizations, durations):
             except Exception:
                 break
 
-            end_time = durations[idx - 1][1] + min(PAD_DURATION, durations[idx][1] - durations[idx - 1][1])
+            end_time = durations[idx - 1][1] + min(conf['pad_duration'], durations[idx][1] - durations[idx - 1][1])
             consecutive_durations.append([start_time, end_time])
     return consecutive_segments, consecutive_durations
 
@@ -146,5 +152,5 @@ for audio_id, diarization, emotion, transcript in zip(audio_ids, diarizations, e
         pos += len(diarization[idx])
 
 # Save manifest file
-with open(os.path.join(SAVE_PATH, "ViSEDia_manifest.json"), "w", encoding="utf-8") as f:
+with open(os.path.join(conf['save_path'], "ViSEDia_manifest.json"), "w", encoding="utf-8") as f:
     json.dump(manifests, f, ensure_ascii=False, indent=4)
