@@ -125,6 +125,9 @@ for audio_id, diarization, emotion, transcript in zip(audio_ids, diarizations, e
         key = f"{audio_id}-{idx}"
         start_time, end_time = duration[idx][0], duration[idx][1]
 
+        if end_time - start_time < 0.5:
+            continue
+
         # Process audio
         processed_audio = get_audio_segments(
             waveform, sample_rate, start_time, end_time
