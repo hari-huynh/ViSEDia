@@ -115,7 +115,8 @@ manifests = {}
 for audio_id, diarization, emotion, transcript in zip(audio_ids, diarizations, emotions, transcriptions):
     pos = 0
     non_overlaps, duration = merge_segments(diarization)
-    diarization, duration = merge_consecutive_short_segments(non_overlaps, duration)
+    # diarization, duration = merge_consecutive_short_segments(non_overlaps, duration)
+    diarization = non_overlaps
 
     # Load audio file
     waveform, sample_rate = load_audio(audio_id)
